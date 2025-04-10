@@ -249,6 +249,10 @@ Response includes `'omop_id': '161'`:
 [({'medline_plus_id': 'a621016', 'name': 'Acetaminophen', 'nhs_api_url': 'https://int.api.service.nhs.uk/nhs-website-content/medicines/paracetamol-for-children/', 'nhs_url': 'https://nhs.uk/medicines/paracetamol-for-children/', 'mesh_id': 'D058633', 'mesh_tree': ['D02.092.146.113.092.040', 'D02.065.199.092.040'], 'drugbank_id': 'DB00316', 'wikipedia_url': 'https://en.wikipedia.org/wiki/Paracetamol', 'synonyms': ['calpol', 'acetaminophen', 'panadol', 'tylenol', 'actamin', 'ofirmev', 'apap', 'paracetamol', 'acephen rectal suppository', 'neopap supprettes rectal suppository', 'calpol', 'acetominophen', 'p-hydroxyacetanilide', 'acamol', 'acetaco', 'p-acetamidophenol', 'anacin-3', 'hydroxyacetanilide', 'anacin 3', 'algotropyl', 'n-acetyl-p-aminophenol', 'anacin3', 'acetamidophenol', 'datril', 'acephen', '4-acetamidophenol', "4'-hydroxyacetanilide", 'acenol', 'acetaminofén', 'acétaminophène', 'p-acetaminophenol', 'p-acetylaminophenol', 'p-hydroxy-acetanilid', 'p-hydroxyphenolacetamide', 'paracétamol', 'paracetamolum'], 'is_brand': False, 'match_type': 'exact', 'matching_string': 'paracetamol', 'omop_id': '161'}, 0, 1)]
 
 ```
+## SMILES (Simplified Molecular Input Line Entry System Integration)
+
+We now support SMILES (Simplified Molecular Input Line Entry System) strings for drug molecules. SMILES data is extracted from PubChem’s CID-SMILES.gz file and integrated during the dictionary build step (06_add_smiles_from_pubchem.py), enriching each drug entry with a machine-readable structure. If available, a SMILES string is returned in the find_drugs() output under the smiles key. For visualisation, users can refer to the example notebook using RDKit (optional dependency). This enhancement allows better structural insight without relying on external APIs.
+
 
 # 📁Data sources
 
