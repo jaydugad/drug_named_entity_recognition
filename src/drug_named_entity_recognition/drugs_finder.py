@@ -283,9 +283,3 @@ def find_drugs(tokens: list, is_fuzzy_match=False, is_ignore_case=None, is_inclu
 
 
 reset_drugs_data()
-
-import json
-
-response = find_drugs(["insulin"])
-print(len(response))
-print(json.dumps(response, indent=4))

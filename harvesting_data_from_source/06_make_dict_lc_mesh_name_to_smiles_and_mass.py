@@ -28,7 +28,7 @@ with open("CID-Mass", "r", encoding="utf-8") as f:
         cols = line.strip().split("\t")
 
         if cols[0] in pubchem_id_to_name_lc:
-            pubchem_id_to_mass[cols[0]] = cols[1:]
+            pubchem_id_to_mass[cols[0]] = cols[1:2] + [float(x) for x in cols[2:]]
 
 mesh_name_to_smiles = {}
 for pubchem_id, smiles in pubchem_id_to_smiles.items():

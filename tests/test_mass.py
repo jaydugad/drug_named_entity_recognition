@@ -28,41 +28,43 @@ SOFTWARE.
 
 import unittest
 
-from drug_named_entity_recognition.drugs_finder import find_drugs, reset_drugs_data
+from drug_named_entity_recognition.drugs_finder import find_drugs
 
 
-class TestSmiles(unittest.TestCase):
+class TestMass(unittest.TestCase):
 
-    def test_paracetamol_has_smiles(self):
+    def test_paracetamol_has_mass(self):
         tokens = ["paracetamol"]
         matches = find_drugs(tokens)
 
         self.assertGreater(len(matches), 0, "No matches found for 'paracetamol'")
         match_data = matches[0][0]
 
-        self.assertIn("smiles", match_data, "SMILES field not found in match data")
-        self.assertIsInstance(match_data["smiles"], str, "SMILES is not a string")
-        self.assertGreater(len(match_data["smiles"]), 0, "SMILES string is empty")
-        self.assertIn("CC", match_data["smiles"])
+        self.assertIn("mass_lower", match_data, "mass field not found in match data")
+        self.assertIsInstance(match_data["mass_lower"], float, "mass is not a float")
+        self.assertGreater(match_data["mass_lower"], 151, )
+        self.assertLess(match_data["mass_upper"], 152, )
 
-        print("\n================ SMILES Output ================")
-        print(match_data["smiles"])
+        print("\n================ Mass Output ================")
+        print("Lower bound mass:", match_data["mass_lower"])
+        print("Upper bound mass:", match_data["mass_upper"])
         print("===============================================")
 
-    def test_ozempic_has_smiles(self):
+    def test_ozempic_has_mass(self):
         tokens = ["ozempic"]
         matches = find_drugs(tokens)
 
         self.assertGreater(len(matches), 0, "No matches found for 'ozempic'")
         match_data = matches[0][0]
 
-        self.assertIn("smiles", match_data, "SMILES field not found in match data")
-        self.assertIsInstance(match_data["smiles"], str, "SMILES is not a string")
-        self.assertGreater(len(match_data["smiles"]), 0, "SMILES string is empty")
-        self.assertIn("CC", match_data["smiles"])
+        self.assertIn("mass_lower", match_data, "mass field not found in match data")
+        self.assertIsInstance(match_data["mass_lower"], float, "mass is not a float")
+        self.assertGreater(match_data["mass_lower"], 4111, )
+        self.assertLess(match_data["mass_upper"], 4115, )
 
-        print("\n================ SMILES Output ================")
-        print(match_data["smiles"])
+        print("\n================ Mass Output ================")
+        print("Lower bound mass:", match_data["mass_lower"])
+        print("Upper bound mass:", match_data["mass_upper"])
         print("===============================================")
 
 

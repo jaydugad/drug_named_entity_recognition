@@ -31,38 +31,38 @@ import unittest
 from drug_named_entity_recognition.drugs_finder import find_drugs, reset_drugs_data
 
 
-class TestSmiles(unittest.TestCase):
+class TestFormula(unittest.TestCase):
 
-    def test_paracetamol_has_smiles(self):
+    def test_paracetamol_has_formula(self):
         tokens = ["paracetamol"]
         matches = find_drugs(tokens)
 
         self.assertGreater(len(matches), 0, "No matches found for 'paracetamol'")
         match_data = matches[0][0]
 
-        self.assertIn("smiles", match_data, "SMILES field not found in match data")
-        self.assertIsInstance(match_data["smiles"], str, "SMILES is not a string")
-        self.assertGreater(len(match_data["smiles"]), 0, "SMILES string is empty")
-        self.assertIn("CC", match_data["smiles"])
+        self.assertIn("formula", match_data, "formula field not found in match data")
+        self.assertIsInstance(match_data["formula"], str, "formula is not a string")
+        self.assertGreater(len(match_data["formula"]), 0, "formula string is empty")
+        self.assertEqual("C8H9NO2", match_data["formula"])
 
-        print("\n================ SMILES Output ================")
-        print(match_data["smiles"])
+        print("\n================ formula Output ================")
+        print(match_data["formula"])
         print("===============================================")
 
-    def test_ozempic_has_smiles(self):
+    def test_ozempic_has_formula(self):
         tokens = ["ozempic"]
         matches = find_drugs(tokens)
 
         self.assertGreater(len(matches), 0, "No matches found for 'ozempic'")
         match_data = matches[0][0]
 
-        self.assertIn("smiles", match_data, "SMILES field not found in match data")
-        self.assertIsInstance(match_data["smiles"], str, "SMILES is not a string")
-        self.assertGreater(len(match_data["smiles"]), 0, "SMILES string is empty")
-        self.assertIn("CC", match_data["smiles"])
+        self.assertIn("formula", match_data, "formula field not found in match data")
+        self.assertIsInstance(match_data["formula"], str, "formula is not a string")
+        self.assertGreater(len(match_data["formula"]), 0, "formula string is empty")
+        self.assertEqual("C187H291N45O59", match_data["formula"])
 
-        print("\n================ SMILES Output ================")
-        print(match_data["smiles"])
+        print("\n================ formula Output ================")
+        print(match_data["formula"])
         print("===============================================")
 
 
