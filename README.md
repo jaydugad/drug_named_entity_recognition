@@ -307,6 +307,8 @@ To the extent possible under law, the person who associated CC0 with the DrugBan
 
 * Text from Wikipedia data dump is licensed under [GNU Free Documentation License](https://www.gnu.org/licenses/fdl-1.3.html) and [Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/). [More information](https://dumps.wikimedia.org/legal.html).
 
+* Pubchem is an open access database. More information: https://pubchem.ncbi.nlm.nih.gov/docs/downloads2
+
 ## Contributing to the Drug Named Entity Recognition library
 
 If you'd like to contribute to this project, you can contact us at https://fastdatascience.com/ or make a pull request on our [Github repository](https://github.com/fastdatascience/drug_named_entity_recognition). You can also [raise an issue](https://github.com/fastdatascience/drug_named_entity_recognition/issues). 
@@ -385,3 +387,8 @@ Wood, T.A., Drug Named Entity Recognition [Computer software], Version 2.0.7, ac
     doi = {10.5281/zenodo.10970631}
 }
 ```
+
+## Citations
+
+1. Kim S, Chen J, Cheng T, et al. PubChem 2025 update. Nucleic Acids Res. 2025;53(D1):D1516-D1525. doi:10.1093/nar/gkae1059
+2. Knox C, Wilson M, Klinger CM, et al. DrugBank 6.0: the DrugBank Knowledgebase for 2024. Nucleic Acids Res. 2024 Jan 5;52(D1):D1265-D1275. doi: 10.1093/nar/gkad976.

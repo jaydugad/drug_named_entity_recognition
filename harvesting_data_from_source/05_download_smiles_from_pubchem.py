@@ -61,6 +61,19 @@ os.waitpid(wget.pid, 0)
 
 print(f"Downloaded Pubchem SMILES data from {url_pubchem_smiles} to {output_file_pubchem_smiles}.")
 
+url_pubchem_mass = "https://ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/CID-Mass.gz"
+output_file_pubchem_mass = "CID-Mass.gz"
+
+print(f"Platform is {platform}.")
+if "win" in platform:  # if we are on Windows, use curl.exe (supported in Windows 10 and up)
+    wget = subprocess.Popen(["curl.exe", "--output", output_file_pubchem_mass, "--url", url_pubchem_mass])
+else:
+    wget = subprocess.Popen(["wget", "-O", output_file_pubchem_mass, url_pubchem_mass])
+
+os.waitpid(wget.pid, 0)
+
+print(f"Downloaded Pubchem mass data from {url_pubchem_mass} to {output_file_pubchem_mass}.")
+
 print(f"Unzipping {output_file_pubchem_smiles}.")
 
 unzip = subprocess.Popen(["gunzip", "-f", output_file_pubchem_smiles])
@@ -68,3 +81,11 @@ unzip = subprocess.Popen(["gunzip", "-f", output_file_pubchem_smiles])
 os.waitpid(unzip.pid, 0)
 
 print(f"Unzipped {output_file_pubchem_smiles}.")
+
+print(f"Unzipping {output_file_pubchem_mass}.")
+
+unzip = subprocess.Popen(["gunzip", "-f", output_file_pubchem_mass])
+
+os.waitpid(unzip.pid, 0)
+
+print(f"Unzipped {output_file_pubchem_mass}.")

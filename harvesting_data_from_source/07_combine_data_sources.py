@@ -51,6 +51,8 @@ drug_variant_to_variant_data = {}
 with open("mesh_name_to_smiles.json", "r", encoding="utf-8") as f:
     mesh_lc_name_to_smiles = json.loads(f.read())
 
+with open("mesh_name_to_mass.json", "r", encoding="utf-8") as f:
+    mesh_lc_name_to_mass = json.loads(f.read())
 
 def add_canonical(canonical: str, data: dict):
     canonical_norm = canonical.lower().strip()
@@ -167,6 +169,10 @@ with open(this_path.joinpath("drugs_dictionary_mesh.csv"), 'r', encoding="utf-8"
             tmp_name_to_lookup_smiles_lc = tmp_name_to_lookup_smiles.lower()
             if tmp_name_to_lookup_smiles_lc in mesh_lc_name_to_smiles:
                 data["smiles"] = mesh_lc_name_to_smiles[tmp_name_to_lookup_smiles_lc]
+            if tmp_name_to_lookup_smiles_lc in mesh_lc_name_to_mass:
+                data["formula"] = mesh_lc_name_to_mass[tmp_name_to_lookup_smiles_lc][0]
+                data["mass_lower"] = mesh_lc_name_to_mass[tmp_name_to_lookup_smiles_lc][1]
+                data["mass_upper"] = mesh_lc_name_to_mass[tmp_name_to_lookup_smiles_lc][2]
 
         if "smiles" in data:
             number_of_smiles_matches_found += 1
