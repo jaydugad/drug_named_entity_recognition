@@ -141,5 +141,8 @@ wget-log*
 /src/drug_named_entity_recognition/open structures.sdf
 
 # OMOP API local cache
-omop_cache.pklsrc/drug_named_entity_recognition/pubchem_data/CID-SMILES
-src/drug_named_entity_recognition/pubchem_data/CID-SMILES
+omop_cache.pkl
+/harvesting_data_from_source/CID-MeSH
+/harvesting_data_from_source/CID-SMILES
+/harvesting_data_from_source/CID-SMILES.gz
+/harvesting_data_from_source/mesh_name_to_smiles.json

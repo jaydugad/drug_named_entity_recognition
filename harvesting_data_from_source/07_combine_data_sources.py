@@ -48,6 +48,9 @@ drug_variant_to_canonical = {}
 drug_canonical_to_data = {}
 drug_variant_to_variant_data = {}
 
+with open("mesh_name_to_smiles.json", "r", encoding="utf-8") as f:
+    mesh_lc_name_to_smiles = json.loads(f.read())
+
 
 def add_canonical(canonical: str, data: dict):
     canonical_norm = canonical.lower().strip()
@@ -102,7 +105,7 @@ with open("all_nhs_drugs.json", "r", encoding="utf-8") as f:
 
 
 def get_names_nhs(text: str):
-    possible_names = re.split("[,\(]", text)
+    possible_names = re.split(r"[,\(]", text)
 
     names_found = list()
     for name in possible_names:
@@ -121,8 +124,8 @@ def get_names_nhs(text: str):
 def get_brand_names_nhs(description: str):
     if "brand name" in description.lower():
         description = description.strip()
-        description = re.sub('(?i)\W*brand names?\W*', '', description)
-        description = re.sub('(?i)find out.*', '', description)
+        description = re.sub(r'(?i)\W*brand names?\W*', '', description)
+        description = re.sub(r'(?i)find out.*', '', description)
         return get_names_nhs(description)
     return []
 
@@ -142,6 +145,8 @@ for nhs_drug in nhs_data:
     for synonym in brand_names:
         add_synonym(synonym, canonical, {"is_brand": True})
 
+number_of_smiles_matches_found = 0
+number_of_smiles_matches_not_found = 0
 with open(this_path.joinpath("drugs_dictionary_mesh.csv"), 'r', encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     headers = None
@@ -157,12 +162,26 @@ with open(this_path.joinpath("drugs_dictionary_mesh.csv"), 'r', encoding="utf-8"
         data = {"mesh_id": id, "mesh_tree": tree}
 
         canonical = common_name
+
+        for tmp_name_to_lookup_smiles in [common_name] + generic_names + synonyms:
+            tmp_name_to_lookup_smiles_lc = tmp_name_to_lookup_smiles.lower()
+            if tmp_name_to_lookup_smiles_lc in mesh_lc_name_to_smiles:
+                data["smiles"] = mesh_lc_name_to_smiles[tmp_name_to_lookup_smiles_lc]
+
+        if "smiles" in data:
+            number_of_smiles_matches_found += 1
+        else:
+            number_of_smiles_matches_not_found += 1
+
         add_canonical(canonical, data)
         for synonym in generic_names:
             add_synonym(synonym, canonical, {"is_brand": False})
         add_synonym(common_name, canonical)
         for synonym in synonyms:
             add_synonym(synonym, canonical)
+
+print(
+    f"Added MeSH data. We were also able to match the MeSH names to {number_of_smiles_matches_found} SMILES strings but {number_of_smiles_matches_not_found} could not be matched to SMILES.")
 
 with open(this_path.joinpath("drugbank vocabulary.csv"), 'r', encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
@@ -213,7 +232,7 @@ for word in list(drug_variant_to_canonical):
     reason = None
     if word in all_english_vocab and word not in common_english_words_to_include_in_drugs_dictionary:
         reason = "it is an English word in NLTK dictionary"
-        if word not in common_english_words_to_include_in_drugs_dictionary:
+        if word not in common_english_words_to_include_in_drugs_dictionary and len(word) > 2:
             words_to_check_with_ai.add(word)
     elif word in extra_terms_to_exclude_from_drugs_dictionary:
         reason = "it is in the manual ignore list"
@@ -237,7 +256,7 @@ for variant, canonicals in drug_variant_to_canonical.items():
         canonical_has_variants_pointing_to_it.add(canonical)
 
 with open("words_to_check_with_ai.txt", "w", encoding="utf-8") as f:
-    f.write("\n".join(words_to_check_with_ai))
+    f.write("\n".join(sorted(words_to_check_with_ai)))
 
 # Find any redirects that go through twice
 
